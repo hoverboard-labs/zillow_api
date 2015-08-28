@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'zillow_api'
   s.description = 'Gem for interfacing with Zillow API'
-  s.version     = '0.1'
-  s.date        = '2015-06-04'
+  s.version     = '0.2'
+  s.date        = '2015-08-28'
   s.summary     = ' ZillowAPI'
   s.authors     = ["Ben Freeman"]
   s.email       = 'benfreeman@gmail.com'
