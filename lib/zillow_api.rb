@@ -2,7 +2,7 @@ class ZillowAPI
   require 'open-uri'
   require 'nokogiri'
 
-  ZILLOW_API_URL      = "http://www.zillow.com/webservice/GetSearchResults.htm?rentzestimate=true"
+  ZILLOW_API_URL      = "http://www.zillow.com/webservice/GetDeepSearchResults.htm?rentzestimate=true"
   ZILLOW_DEMO_URL     = "http://www.zillow.com/webservice/GetDemographics.htm?"
   ZILLOW_API_ZPID_URL = "http://www.zillow.com/webservice/GetZestimate.htm?rentzestimate=true"
 
@@ -48,17 +48,29 @@ class ZillowAPI
     if property.css("zpid")[0].text.to_i.to_s == property.css("zpid")[0].text
       property_data = {}
       property_data = { zpid:             property.css("zpid")[0].text,
-        street:           property.css("address")[1].children[0].text,
-        zip_code:         property.css("address")[1].children[1].text,
-        city:             property.css("address")[1].children[2].text.downcase,
-        state:            property.css("address")[1].children[3].text.downcase,
-        latitude:         property.css("address")[1].children[4].text,
-        longitude:        property.css("address")[1].children[5].text,
-        zestimate:        property.css("zestimate")[0].children[0].text,
-        rent_zestimate:   property.css("rentzestimate")[0].children[0].text,
-        neighborhood_id:  property.css("localrealestate")[0].children.css("region").first["id"],
+        street:            property.css("address")[1].children[0].text,
+        zip_code:          property.css("address")[1].children[1].text,
+        city:              property.css("address")[1].children[2].text.downcase,
+        state:             property.css("address")[1].children[3].text.downcase,
+        latitude:          property.css("address")[1].children[4].text,
+        longitude:         property.css("address")[1].children[5].text,
+        zestimate:         property.css("zestimate")[0].children[0].text,
+        zestimate_low:     property.css('valuationrange').children[0].text,
+        zestimate_high:    property.css('valuationrange').children[1].text,
+        rent_zestimate:    property.css("rentzestimate")[0].children[0].text,
+        neighborhood_id:   property.css("localrealestate")[0].children.css("region").first["id"],
         neighborhood_name: property.css("localrealestate")[0].children.css("region").first["name"],
-        neighborhood_type: property.css("localrealestate")[0].children.css("region").first["type"]
+        neighborhood_type: property.css("localrealestate")[0].children.css("region").first["type"],
+        zillow_address:    property.css('homedetails')[0].text,
+        house_type:        property.css('usecode').text,
+        property_tax:      property.css('taxassessment').text,
+        year_built:        property.css('yearbuilt').text,
+        lot_size:          property.css('lotsizesqft').text,
+        house_size:        property.css('finishedsqft').text,
+        bathrooms:         property.css('bathrooms').text,
+        bedrooms:          property.css('bedrooms').text,
+        last_sold_date:    property.css('lastsolddate').text,
+        last_sold_price:   property.css('lastsoldprice').text
       }
       return property_data
     else
