@@ -7,7 +7,7 @@ class ZillowAPI
   ZILLOW_API_ZPID_URL = "http://www.zillow.com/webservice/GetZestimate.htm?rentzestimate=true"
 
   def initialize(api_key)
-    @api_key = api_key
+    @api_key = ENV['ZILLOW_API_KEY']
   end
 
   def get_zpid(address_num:, address_street:, address_street_type:nil, address_city:nil, address_state:nil, address_zip:nil)
